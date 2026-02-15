@@ -171,7 +171,7 @@
       height: 100%;
       backface-visibility: hidden;
       border-radius: 0 8px 8px 0;
-      overflow: hidden;
+      overflow: visible;
     }
     
     .page-back {
@@ -201,6 +201,7 @@
       height: 100%;
       backface-visibility: hidden;
       border-radius: 0 12px 12px 0;
+      overflow: visible;
     }
     
     .cover-back {
@@ -210,10 +211,8 @@
     /* Hyper-realistic aged paper texture */
     .paper-texture {
       background:
-        /* subtle fiber grain */
         repeating-linear-gradient(0deg,   rgba(180,150,110,0.03) 0 1px, transparent 1px 3px),
         repeating-linear-gradient(90deg,  rgba(180,150,110,0.02) 0 1px, transparent 1px 4px),
-        /* warm parchment base */
         linear-gradient(135deg, #fef7ed 0%, #fdf0e2 20%, #fef9f3 45%, #fbecd8 70%, #fef7ed 100%);
       box-shadow:
         inset 0 0 80px rgba(139, 90, 43, 0.10),
@@ -250,16 +249,51 @@
       right: 6px;
       transform: rotate(180deg);
     }
+
+    /* Sticker Styles */
+    .sticker {
+      position: absolute;
+      opacity: 0.85;
+      user-select: none;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .sticker.small { font-size: clamp(1rem, 3vw, 1.8rem); }
+    .sticker.medium { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+    .sticker.large { font-size: clamp(2rem, 5vw, 3.5rem); }
+
+    .sticker.bounce { animation: sticker-bounce 3s ease-in-out infinite; }
+    .sticker.spin { animation: sticker-spin 4s linear infinite; }
+    .sticker.float { animation: sticker-float 3s ease-in-out infinite; }
+    .sticker.tilt { animation: sticker-tilt 2.5s ease-in-out infinite; }
+
+    @keyframes sticker-bounce {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+
+    @keyframes sticker-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes sticker-float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-6px) translateX(3px); }
+      50% { transform: translateY(-10px) translateX(0); }
+      75% { transform: translateY(-6px) translateX(-3px); }
+    }
+
+    @keyframes sticker-tilt {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
     
-    /* Photo Frame */
+    /* Photo Frame Styles */
     .photo-frame {
-      border: 3px solid #d4a574;
-      box-shadow: 
-        0 0 0 1px #f5e6d3,
-        0 0 0 4px #d4a574,
-        0 4px 20px rgba(139, 90, 43, 0.2);
-      background: linear-gradient(135deg, #fef7ed, #fff);
-      padding: 8px;
+      position: relative;
+      overflow: hidden;
+      display: block;
     }
     
     .photo-frame img {
@@ -267,6 +301,79 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* Frame 1 - Classic Gold Border */
+    .photo-frame.frame-1 {
+      border: 3px solid #d4a574;
+      box-shadow: 0 0 0 1px #f5e6d3, 0 0 0 4px #d4a574, 0 4px 20px rgba(139, 90, 43, 0.2);
+      padding: 8px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #fef7ed, #fff);
+    }
+
+    /* Frame 2 - Romantic Pink */
+    .photo-frame.frame-2 {
+      border: 6px solid #f472b6;
+      box-shadow: 0 0 0 2px #fdf0e2, 0 0 0 6px #f472b6, inset 0 0 0 1px #fce7f3, 0 8px 16px rgba(244, 114, 182, 0.25);
+      padding: 6px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff5f8, #fff);
+    }
+
+    /* Frame 3 - Polaroid Style */
+    .photo-frame.frame-3 {
+      border: 8px solid #fef7ed;
+      box-shadow: 0 0 0 1px #d4a574, 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: 4px;
+      border-radius: 2px;
+      background: white;
+      transform: rotate(-2deg);
+    }
+
+    /* Frame 4 - Vintage Double Border */
+    .photo-frame.frame-4 {
+      border: 4px double #c9a959;
+      box-shadow: inset 0 0 0 1px #f5e6d3, inset 0 0 0 3px #c9a959, 0 4px 12px rgba(139, 90, 43, 0.15);
+      padding: 10px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #fef9f3, #fff);
+    }
+
+    /* Frame 5 - Soft Watercolor */
+    .photo-frame.frame-5 {
+      border: 4px solid #f9a8c9;
+      box-shadow: 0 0 0 2px #fdf0e2, 0 0 20px rgba(249, 168, 201, 0.4), 0 4px 12px rgba(244, 114, 182, 0.15);
+      padding: 8px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(253, 240, 226, 0.5), rgba(255, 255, 255, 0.8));
+    }
+
+    /* Frame 6 - Ornate Layered Gold */
+    .photo-frame.frame-6 {
+      border: 6px solid #d4a574;
+      box-shadow: inset 0 0 0 1px #ffeab2, inset 0 0 0 2px #d4a574, inset 0 0 0 4px #ffeab2, 0 6px 18px rgba(139, 90, 43, 0.25);
+      padding: 8px;
+      border-radius: 3px;
+      background: linear-gradient(45deg, #fef9f3, #fffbf7);
+    }
+
+    /* Frame 7 - Modern Pink Ring */
+    .photo-frame.frame-7 {
+      border: 2px solid #f9a8c9;
+      box-shadow: 0 0 0 8px rgba(249, 168, 201, 0.15), 0 10px 30px rgba(244, 143, 177, 0.2);
+      padding: 6px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #fff5f8, #fff);
+    }
+
+    /* Frame 8 - Minimalist Line */
+    .photo-frame.frame-8 {
+      border: 1px solid #d4a574;
+      box-shadow: 0 0 0 8px rgba(244, 143, 177, 0.08), 0 4px 16px rgba(0, 0, 0, 0.1);
+      padding: 4px;
+      border-radius: 0;
+      background: white;
     }
     
     /* Heart Animation */
@@ -318,9 +425,7 @@
       width: 22px;
       height: 100%;
       background:
-        /* leather grain micro-texture */
         repeating-linear-gradient(180deg, rgba(255,255,255,0.04) 0 1px, rgba(0,0,0,0.06) 1px 2px),
-        /* depth bands */
         linear-gradient(90deg,
           #5c2e0e 0%,
           #7a3b15 15%,
@@ -335,7 +440,6 @@
         2px 0 8px rgba(0,0,0,0.15);
       z-index: 100;
     }
-    /* Spine stitching line */
     .book-spine::before {
       content: "";
       position: absolute;
@@ -351,7 +455,6 @@
       );
       border-radius: 1px;
     }
-    /* Top & bottom spine bands */
     .book-spine::after {
       content: "";
       position: absolute;
@@ -372,13 +475,11 @@
       50% { transform: translateX(10px); }
     }
     
-    /* Hyper-realistic cover — rich fabric/leather base */
+    /* Hyper-realistic cover */
     .cover-gradient {
       background:
-        /* fabric weave micro-pattern */
         repeating-linear-gradient(0deg,   rgba(255,255,255,0.02) 0 1px, transparent 1px 3px),
         repeating-linear-gradient(90deg,  rgba(0,0,0,0.03)       0 1px, transparent 1px 3px),
-        /* rich velvet-like gradient */
         linear-gradient(145deg,
           #d14468 0%,
           #b8355a 12%,
@@ -389,13 +490,11 @@
           #5a1128 100%);
     }
 
-    /* Cover pseudo layers for depth & realism */
     .cover-front, .cover-back {
-      overflow: hidden;
+      overflow: visible;
       position: absolute;
     }
 
-    /* Layer 1: noise grain + directional light */
     .cover-front::before {
       content: "";
       position: absolute;
@@ -404,17 +503,13 @@
       z-index: 1;
       opacity: 0.28;
       background:
-        /* fine noise grain */
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"),
-        /* top-left light source */
         radial-gradient(ellipse 120% 80% at 15% 10%, rgba(255,255,255,0.18), transparent 55%),
-        /* bottom-right ambient shadow */
         radial-gradient(ellipse 120% 90% at 85% 90%, rgba(0,0,0,0.14), transparent 55%);
       background-size: 150px 150px, 100% 100%, 100% 100%;
       mix-blend-mode: overlay;
     }
 
-    /* Layer 2: edge lighting & inner shadow for 3D feel */
     .cover-front::after {
       content: "";
       position: absolute;
@@ -422,13 +517,9 @@
       pointer-events: none;
       z-index: 2;
       background:
-        /* left edge highlight (light catching the edge) */
         linear-gradient(90deg, rgba(255,220,180,0.12) 0%, transparent 8%),
-        /* right edge shadow */
         linear-gradient(270deg, rgba(0,0,0,0.10) 0%, transparent 12%),
-        /* top sheen */
         linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 20%),
-        /* bottom shadow */
         linear-gradient(0deg, rgba(0,0,0,0.08) 0%, transparent 15%);
     }
 
@@ -451,7 +542,6 @@
         inset 0 0 30px rgba(0,0,0,0.08);
     }
 
-    /* Page edge effect — visible fanned pages on the right */
     .book::before {
       content: "";
       position: absolute;
@@ -474,123 +564,155 @@
     }
   </style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <style>body { box-sizing: border-box; }</style>
  </head>
- <body class="h-full font-body">
-  <!-- ====== ROMANTIC ANIMATED SCENE (runs from page load) ====== -->
-  <div class="romantic-scene" aria-hidden="true">
-    <!-- Glow orbs -->
-    <div class="glow-orb o1"></div>
-    <div class="glow-orb o2"></div>
-    <div class="glow-orb o3"></div>
-    <div class="glow-orb o4"></div>
-    <!-- Floating hearts -->
-    <div class="scene-heart" style="left:6%;  font-size:28px; --dur:9s;  --delay:0s;   --rot:20deg;  --peak:0.40; color:rgba(244,143,177,0.5);">♥</div>
-    <div class="scene-heart" style="left:18%; font-size:18px; --dur:11s; --delay:2s;   --rot:-15deg; --peak:0.30; color:rgba(251,191,213,0.5);">♥</div>
-    <div class="scene-heart" style="left:32%; font-size:24px; --dur:8s;  --delay:1s;   --rot:30deg;  --peak:0.35; color:rgba(244,143,177,0.45);">♥</div>
-    <div class="scene-heart" style="left:48%; font-size:20px; --dur:12s; --delay:3.5s; --rot:-25deg; --peak:0.28; color:rgba(253,164,196,0.4);">♥</div>
-    <div class="scene-heart" style="left:62%; font-size:30px; --dur:10s; --delay:0.5s; --rot:18deg;  --peak:0.38; color:rgba(244,143,177,0.45);">♥</div>
-    <div class="scene-heart" style="left:78%; font-size:16px; --dur:9s;  --delay:4s;   --rot:-20deg; --peak:0.32; color:rgba(251,191,213,0.5);">♥</div>
-    <div class="scene-heart" style="left:90%; font-size:22px; --dur:11s; --delay:1.8s; --rot:28deg;  --peak:0.36; color:rgba(244,143,177,0.4);">♥</div>
-    <div class="scene-heart" style="left:12%; font-size:14px; --dur:13s; --delay:5s;   --rot:-12deg; --peak:0.25; color:rgba(253,164,196,0.4);">♥</div>
-    <div class="scene-heart" style="left:55%; font-size:26px; --dur:10s; --delay:2.5s; --rot:22deg;  --peak:0.33; color:rgba(244,143,177,0.42);">♥</div>
-    <div class="scene-heart" style="left:85%; font-size:20px; --dur:8.5s;--delay:3s;   --rot:-18deg; --peak:0.30; color:rgba(251,191,213,0.45);">♥</div>
-    <!-- Drifting petals -->
-    <div class="scene-petal" style="left:10%; top:15%; --sz:16px; --dur:14s; --delay:0s;   --dx:60px;  --dy:-110vh; --rot:400deg;"></div>
-    <div class="scene-petal" style="left:25%; top:5%;  --sz:12px; --dur:12s; --delay:2s;   --dx:-40px; --dy:-105vh; --rot:-320deg;"></div>
-    <div class="scene-petal" style="left:42%; top:20%; --sz:18px; --dur:16s; --delay:1s;   --dx:80px;  --dy:-115vh; --rot:450deg;"></div>
-    <div class="scene-petal" style="left:60%; top:8%;  --sz:10px; --dur:11s; --delay:3.5s; --dx:-50px; --dy:-108vh; --rot:-280deg;"></div>
-    <div class="scene-petal" style="left:75%; top:18%; --sz:14px; --dur:13s; --delay:0.5s; --dx:70px;  --dy:-112vh; --rot:360deg;"></div>
-    <div class="scene-petal" style="left:88%; top:12%; --sz:11px; --dur:15s; --delay:4s;   --dx:-30px; --dy:-100vh; --rot:-400deg;"></div>
-    <!-- Sparkles -->
-    <div class="scene-sparkle" style="top:20%; left:15%; --dur:3s;  --delay:0s;"></div>
-    <div class="scene-sparkle" style="top:35%; left:80%; --dur:4s;  --delay:1.5s;"></div>
-    <div class="scene-sparkle" style="top:65%; left:25%; --dur:3.5s;--delay:2.5s;"></div>
-    <div class="scene-sparkle" style="top:50%; left:60%; --dur:2.8s;--delay:0.8s;"></div>
-    <div class="scene-sparkle" style="top:75%; left:45%; --dur:3.2s;--delay:3.8s;"></div>
-    <div class="scene-sparkle" style="top:15%; left:70%; --dur:4.2s;--delay:1s;"></div>
-    <div class="scene-sparkle" style="top:85%; left:55%; --dur:3s;  --delay:2s;"></div>
-    <div class="scene-sparkle" style="top:40%; left:40%; --dur:3.8s;--delay:4.5s;"></div>
+ <body class="h-full font-body"><!-- ====== ROMANTIC ANIMATED SCENE (runs from page load) ====== -->
+  <div class="romantic-scene" aria-hidden="true"><!-- Glow orbs -->
+   <div class="glow-orb o1"></div>
+   <div class="glow-orb o2"></div>
+   <div class="glow-orb o3"></div>
+   <div class="glow-orb o4"></div><!-- Floating hearts -->
+   <div class="scene-heart" style="left:6%;  font-size:28px; --dur:9s;  --delay:0s;   --rot:20deg;  --peak:0.40; color:rgba(244,143,177,0.5);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:18%; font-size:18px; --dur:11s; --delay:2s;   --rot:-15deg; --peak:0.30; color:rgba(251,191,213,0.5);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:32%; font-size:24px; --dur:8s;  --delay:1s;   --rot:30deg;  --peak:0.35; color:rgba(244,143,177,0.45);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:48%; font-size:20px; --dur:12s; --delay:3.5s; --rot:-25deg; --peak:0.28; color:rgba(253,164,196,0.4);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:62%; font-size:30px; --dur:10s; --delay:0.5s; --rot:18deg;  --peak:0.38; color:rgba(244,143,177,0.45);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:78%; font-size:16px; --dur:9s;  --delay:4s;   --rot:-20deg; --peak:0.32; color:rgba(251,191,213,0.5);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:90%; font-size:22px; --dur:11s; --delay:1.8s; --rot:28deg;  --peak:0.36; color:rgba(244,143,177,0.4);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:12%; font-size:14px; --dur:13s; --delay:5s;   --rot:-12deg; --peak:0.25; color:rgba(253,164,196,0.4);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:55%; font-size:26px; --dur:10s; --delay:2.5s; --rot:22deg;  --peak:0.33; color:rgba(244,143,177,0.42);">
+    ♥
+   </div>
+   <div class="scene-heart" style="left:85%; font-size:20px; --dur:8.5s;--delay:3s;   --rot:-18deg; --peak:0.30; color:rgba(251,191,213,0.45);">
+    ♥
+   </div><!-- Drifting petals -->
+   <div class="scene-petal" style="left:10%; top:15%; --sz:16px; --dur:14s; --delay:0s;   --dx:60px;  --dy:-110vh; --rot:400deg;"></div>
+   <div class="scene-petal" style="left:25%; top:5%;  --sz:12px; --dur:12s; --delay:2s;   --dx:-40px; --dy:-105vh; --rot:-320deg;"></div>
+   <div class="scene-petal" style="left:42%; top:20%; --sz:18px; --dur:16s; --delay:1s;   --dx:80px;  --dy:-115vh; --rot:450deg;"></div>
+   <div class="scene-petal" style="left:60%; top:8%;  --sz:10px; --dur:11s; --delay:3.5s; --dx:-50px; --dy:-108vh; --rot:-280deg;"></div>
+   <div class="scene-petal" style="left:75%; top:18%; --sz:14px; --dur:13s; --delay:0.5s; --dx:70px;  --dy:-112vh; --rot:360deg;"></div>
+   <div class="scene-petal" style="left:88%; top:12%; --sz:11px; --dur:15s; --delay:4s;   --dx:-30px; --dy:-100vh; --rot:-400deg;"></div><!-- Sparkles -->
+   <div class="scene-sparkle" style="top:20%; left:15%; --dur:3s;  --delay:0s;"></div>
+   <div class="scene-sparkle" style="top:35%; left:80%; --dur:4s;  --delay:1.5s;"></div>
+   <div class="scene-sparkle" style="top:65%; left:25%; --dur:3.5s;--delay:2.5s;"></div>
+   <div class="scene-sparkle" style="top:50%; left:60%; --dur:2.8s;--delay:0.8s;"></div>
+   <div class="scene-sparkle" style="top:75%; left:45%; --dur:3.2s;--delay:3.8s;"></div>
+   <div class="scene-sparkle" style="top:15%; left:70%; --dur:4.2s;--delay:1s;"></div>
+   <div class="scene-sparkle" style="top:85%; left:55%; --dur:3s;  --delay:2s;"></div>
+   <div class="scene-sparkle" style="top:40%; left:40%; --dur:3.8s;--delay:4.5s;"></div>
   </div>
-
-  <div id="app" class="h-full w-full overflow-hidden relative" style="background: linear-gradient(135deg, rgba(252,228,236,0.85) 0%, rgba(248,187,217,0.80) 50%, rgba(244,143,177,0.82) 100%); z-index: 1;"><!-- Main Container -->
-   <div class="h-full w-full flex flex-col items-center justify-center p-3 md:p-6"><!-- Book Container -->
-    <div class="book-wrapper relative"><!-- Book Shadow -->
-     <div class="book-shadow" aria-hidden="true"></div><!-- Main Book -->
-     <div id="book" class="book closed relative w-full h-full" style="z-index: 2;"><!-- Book Spine -->
-      <div class="book-spine"></div><!-- Cover -->
-      <div id="cover" class="cover absolute inset-0 cursor-pointer z-50"><!-- Cover Front -->
-       <div class="cover-front cover-gradient vintage-border rounded-r-xl flex flex-col items-center justify-center" style="padding:clamp(12px,3vw,40px);"><!-- Gold Corner Decorations -->
-        <svg class="absolute gold-ornament" style="top:clamp(8px,1.5vw,16px);left:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor"><path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
+  <div id="app" class="h-full w-full overflow-hidden relative" style="background: linear-gradient(135deg, rgba(252,228,236,0.85) 0%, rgba(248,187,217,0.80) 50%, rgba(244,143,177,0.82) 100%); z-index: 1;">
+   <div class="h-full w-full flex flex-col items-center justify-center p-3 md:p-6">
+    <div class="book-wrapper relative">
+     <div class="book-shadow" aria-hidden="true"></div>
+     <div id="book" class="book closed relative w-full h-full" style="z-index: 2;">
+      <div class="book-spine"></div>
+      <div id="cover" class="cover absolute inset-0 cursor-pointer z-50">
+       <div class="cover-front cover-gradient vintage-border rounded-r-xl flex flex-col items-center justify-center" style="padding:clamp(12px,3vw,40px);">
+        <div class="sticker medium float" style="top:clamp(4px,3vw,20px);right:clamp(8px,4vw,28px);">
+         🌹
+        </div>
+        <div class="sticker small tilt" style="bottom:clamp(8px,3vw,24px);left:clamp(8px,4vw,28px);">
+         💐
+        </div>
+        <div class="sticker small bounce" style="top:clamp(12px,5vw,32px);left:clamp(12px,4vw,32px);">
+         ✨
+        </div>
+        <div class="sticker medium spin" style="bottom:clamp(12px,4vw,32px);right:clamp(12px,5vw,36px);">
+         💕
+        </div>
+        <svg class="absolute gold-ornament" style="top:clamp(8px,1.5vw,16px);left:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor">
+         <path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
         </svg>
-        <svg class="absolute gold-ornament rotate-180" style="bottom:clamp(8px,1.5vw,16px);right:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor"><path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
-        </svg><!-- Heart Icon -->
+        <svg class="absolute gold-ornament rotate-180" style="bottom:clamp(8px,1.5vw,16px);right:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor">
+         <path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
+        </svg>
         <div style="margin-bottom:clamp(6px,1.5vh,24px);">
-         <svg class="text-pink-200" style="width:clamp(36px,8vw,80px);height:clamp(36px,8vw,80px);" fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+         <svg class="text-pink-200" style="width:clamp(36px,8vw,80px);height:clamp(36px,8vw,80px);" fill="currentColor" viewbox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
          </svg>
-        </div><!-- Title -->
-        <h1 id="cover-title" class="font-romantic text-center text-pink-100" style="font-size:clamp(1.6rem,5.5vw,3.8rem); text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:clamp(4px,1vh,16px); line-height:1.15;">Our Love Story</h1><!-- Ornament Line -->
+        </div>
+        <h1 id="cover-title" class="font-romantic text-center text-pink-100" style="font-size:clamp(1.6rem,5.5vw,3.8rem); text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:clamp(4px,1vh,16px); line-height:1.15;">Our Love Story</h1>
         <div class="flex items-center gap-2" style="margin-bottom:clamp(4px,1vh,16px);">
          <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div><span class="text-amber-300" style="font-size:clamp(0.8rem,1.8vw,1.25rem);">♥</span>
          <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div>
-        </div><!-- Names -->
-        <p id="cover-names" class="font-elegant text-pink-200 italic" style="font-size:clamp(0.9rem,2.5vw,1.5rem); margin-bottom:clamp(10px,2vh,32px);">Andi &amp; Bella</p><!-- Open Button --> <button id="open-btn" class="group relative bg-gradient-to-r from-amber-200 to-amber-300 text-rose-800 font-elegant font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" style="padding:clamp(6px,1.2vh,12px) clamp(16px,3.5vw,32px); font-size:clamp(0.75rem,1.8vw,1.1rem);"> <span class="flex items-center gap-2"> <span>Open Our Story</span>
-          <svg class="w-4 h-4 md:w-5 md:h-5 swipe-hint" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </div>
+        <p id="cover-names" class="font-elegant text-pink-200 italic" style="font-size:clamp(0.9rem,2.5vw,1.5rem); margin-bottom:clamp(10px,2vh,32px);">Andi &amp; Bella</p><button id="open-btn" class="group relative bg-gradient-to-r from-amber-200 to-amber-300 text-rose-800 font-elegant font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" style="padding:clamp(6px,1.2vh,12px) clamp(16px,3.5vw,32px); font-size:clamp(0.75rem,1.8vw,1.1rem);"> <span class="flex items-center gap-2"> <span>Open Our Story</span>
+          <svg class="w-4 h-4 md:w-5 md:h-5 swipe-hint" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg></span> </button>
-       </div><!-- Cover Back (Inside) -->
-       <div class="cover-back paper-texture rounded-r-xl p-4 md:p-6 flex items-center justify-center">
+       </div>
+       <div class="cover-back paper-texture rounded-r-xl p-4 md:p-6 flex items-center justify-center relative overflow-visible">
+        <div class="sticker small float" style="top:clamp(8px,3vw,20px);right:clamp(12px,4vw,28px);">
+         💝
+        </div>
+        <div class="sticker medium tilt" style="bottom:clamp(12px,3vw,24px);left:clamp(12px,4vw,28px);">
+         🎀
+        </div>
         <div class="text-center">
          <p class="font-elegant text-rose-400 italic" style="font-size:clamp(0.8rem,2vw,1.15rem); line-height:1.6;">"Every love story is beautiful,<br>
-          but ours is my favorite."</p>
+           but ours is my favorite."</p>
         </div>
        </div>
-      </div><!-- Pages Container -->
-      <div id="pages-container" class="absolute inset-0 ml-5" style="display: none;"><!-- Pages will be generated by JavaScript -->
-      </div><!-- Back Cover -->
+      </div>
+      <div id="pages-container" class="absolute inset-0 ml-5" style="display: none;"></div>
       <div class="absolute inset-0 paper-texture rounded-r-xl">
        <div class="absolute inset-4 border-2 border-rose-200 rounded-lg opacity-50"></div>
       </div>
-     </div><!-- Close/Reset Button --> <button id="close-btn" class="hidden absolute top-2 right-2 md:top-3 md:right-3 z-50 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/80 backdrop-blur shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all">
-      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+     </div><button id="close-btn" class="hidden absolute top-2 right-2 md:top-3 md:right-3 z-50 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/80 backdrop-blur shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all">
+      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg></button>
-    </div><!-- Navigation (shown after book opens) -->
-    <div id="navigation" class="hidden flex items-center justify-center gap-3 md:gap-4 mt-3 md:mt-4 z-50 flex-shrink-0"><button id="prev-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
-       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-       </svg></button> <span id="page-indicator" class="font-elegant text-white text-xs md:text-sm bg-rose-400/80 px-3 py-1 rounded-full shadow"> 1 / 5 </span> <button id="next-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
-       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-       </svg></button>
     </div>
-   </div><!-- Floating Hearts (Final Page) -->
-   <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden" style="display: none;"><!-- Hearts will be generated by JavaScript -->
+    <div id="navigation" class="hidden flex items-center justify-center gap-3 md:gap-4 mt-3 md:mt-4 z-50 flex-shrink-0">
+     <button id="prev-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg></button> <span id="page-indicator" class="font-elegant text-white text-xs md:text-sm bg-rose-400/80 px-3 py-1 rounded-full shadow"> 1 / 5 </span> <button id="next-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></button>
+    </div>
    </div>
+   <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden" style="display: none;"></div>
   </div>
   <script>
-    // ==========================================
-    // KONFIGURASI - EDIT BAGIAN INI
-    // ==========================================
-    
     const defaultConfig = {
-      // Judul buku di cover
       book_title: "Our Love Story",
-      
-      // Nama pasangan
       couple_names: "Andi & Bella",
-      
-      // Ucapan Valentine di halaman terakhir
       final_message: "Terima kasih telah menjadi bagian terindah dalam hidupku. Setiap hari bersamamu adalah hadiah yang tak ternilai. Aku mencintaimu lebih dari kata-kata bisa ungkapkan. Semoga cinta kita terus tumbuh dan berkembang selamanya. Happy Valentine's Day, cintaku! 💕"
     };
     
-    // ==========================================
-    // DATA HALAMAN - EDIT FOTO DAN CAPTION DI SINI
-    // ==========================================
-    
     const pagesData = [
-      // Halaman 1 - Pertemuan Pertama
       {
         title: "When We First Met",
         subtitle: "The Beginning of Us",
+        frameClass: 'frame-1',
+        stickers: ['💑', '✨', '💕', '🌹'],
+        stickerPositions: [
+          { emoji: '💑', class: 'medium bounce', style: 'top:5%;right:8%;' },
+          { emoji: '✨', class: 'small spin', style: 'top:12%;left:6%;' },
+          { emoji: '💕', class: 'medium float', style: 'bottom:8%;right:10%;' },
+          { emoji: '🌹', class: 'small tilt', style: 'bottom:12%;left:8%;' }
+        ],
         photos: [
           {
-            // Ganti URL ini dengan foto Anda
             placeholder: "First Meeting",
             caption: "Hari di mana takdir mempertemukan kita"
           }
@@ -598,10 +720,17 @@
         quote: "From the moment I saw you, I knew my heart would never be the same."
       },
       
-      // Halaman 2 - Kenangan Indah
       {
         title: "Our Beautiful Moments",
         subtitle: "Memories We Cherish",
+        frameClass: 'frame-2',
+        stickers: ['💑', '🌸', '💖', '🎀'],
+        stickerPositions: [
+          { emoji: '🌸', class: 'small float', style: 'top:8%;right:10%;' },
+          { emoji: '💖', class: 'medium tilt', style: 'top:15%;left:8%;' },
+          { emoji: '🎀', class: 'small bounce', style: 'bottom:10%;right:8%;' },
+          { emoji: '💐', class: 'medium spin', style: 'bottom:15%;left:10%;' }
+        ],
         photos: [
           {
             placeholder: "Sweet Memory 1",
@@ -615,10 +744,17 @@
         quote: "Every moment with you is a treasure I hold close to my heart."
       },
       
-      // Halaman 3 - Petualangan Bersama
       {
         title: "Our Adventures",
         subtitle: "Exploring Life Together",
+        frameClass: 'frame-3',
+        stickers: ['🎒', '🌟', '💑', '🎪'],
+        stickerPositions: [
+          { emoji: '🎒', class: 'small tilt', style: 'top:10%;right:12%;' },
+          { emoji: '🌟', class: 'medium spin', style: 'top:12%;left:10%;' },
+          { emoji: '🎪', class: 'small float', style: 'bottom:12%;right:10%;' },
+          { emoji: '✈️', class: 'medium bounce', style: 'bottom:16%;left:8%;' }
+        ],
         photos: [
           {
             placeholder: "Adventure 1",
@@ -636,10 +772,17 @@
         quote: "Life is an adventure, and I'm glad I'm on this journey with you."
       },
       
-      // Halaman 4 - Momen Spesial
       {
         title: "Special Moments",
         subtitle: "Days to Remember",
+        frameClass: 'frame-4',
+        stickers: ['💍', '🎉', '✨', '🌹'],
+        stickerPositions: [
+          { emoji: '💍', class: 'medium spin', style: 'top:8%;right:10%;' },
+          { emoji: '🎉', class: 'small float', style: 'top:15%;left:8%;' },
+          { emoji: '✨', class: 'medium bounce', style: 'bottom:10%;right:8%;' },
+          { emoji: '🌹', class: 'small tilt', style: 'bottom:15%;left:10%;' }
+        ],
         photos: [
           {
             placeholder: "Special Day",
@@ -649,23 +792,25 @@
         quote: "Some days are just more magical with you by my side."
       },
       
-      // Halaman 5 - Halaman Terakhir (Valentine)
       {
         isFinalPage: true,
         title: "Happy Valentine's Day",
-        subtitle: "My Love ❤️"
+        subtitle: "My Love ❤️",
+        frameClass: 'frame-5',
+        stickers: ['💕', '🌹', '💝', '✨'],
+        stickerPositions: [
+          { emoji: '💕', class: 'large float', style: 'top:12%;right:8%;' },
+          { emoji: '🌹', class: 'medium spin', style: 'top:16%;left:8%;' },
+          { emoji: '💝', class: 'large bounce', style: 'bottom:12%;right:10%;' },
+          { emoji: '✨', class: 'medium tilt', style: 'bottom:18%;left:8%;' }
+        ]
       }
     ];
-    
-    // ==========================================
-    // APLIKASI UTAMA
-    // ==========================================
     
     let currentPage = 0;
     let isBookOpen = false;
     let config = { ...defaultConfig };
     
-    // Rose SVG for decoration
     const roseSVG = `
       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M50 15C55 25 65 30 70 25C65 35 70 45 60 45C70 50 70 60 55 55C60 65 55 75 45 65C40 75 30 70 35 60C25 65 20 55 30 50C20 50 20 40 35 45C25 40 30 25 40 35C35 25 45 20 50 15Z" fill="#f9a8c9" opacity="0.7"/>
@@ -686,11 +831,18 @@
       const safeSeed = encodeURIComponent(normalized || 'photo');
       return `https://picsum.photos/seed/${safeSeed}/${width}/${height}`;
     }
+
+    function generateStickersHTML(stickerPositions) {
+      if (!stickerPositions || stickerPositions.length === 0) return '';
+      
+      return stickerPositions.map(s => 
+        `<div class="sticker ${s.class}" style="${s.style}">${s.emoji}</div>`
+      ).join('');
+    }
     
-    // Generate single page content
     function generatePageContent(pageData, pageIndex) {
       if (pageData.isFinalPage) {
-        return generateFinalPage();
+        return generateFinalPage(pageData);
       }
       
       const photosHTML = pageData.photos.map((photo, idx) => {
@@ -700,7 +852,7 @@
 
         return `
           <div class="flex flex-col min-h-0">
-            <div class="photo-frame w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:0;">
+            <div class="photo-frame ${pageData.frameClass} w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:0;">
               <img src="${src}" alt="${alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
             </div>
             <p class="font-body text-rose-600 text-center mt-1 italic" style="font-size:clamp(0.55rem,1.4vw,0.85rem);">${photo.caption}</p>
@@ -716,13 +868,13 @@
           : 'grid grid-cols-3 gap-2';
       
       return `
-        <div class="h-full flex flex-col relative" style="padding:clamp(8px,2vw,24px); padding-top:clamp(6px,1.5vw,20px);">
-          <!-- Corner Roses -->
+        <div class="h-full flex flex-col relative overflow-visible" style="padding:clamp(8px,2vw,24px); padding-top:clamp(6px,1.5vw,20px);">
+          ${generateStickersHTML(pageData.stickerPositions)}
+
           <div class="corner-rose top-left opacity-40">${roseSVG}</div>
           <div class="corner-rose bottom-right opacity-40">${roseSVG}</div>
           
-          <!-- Header -->
-          <div class="text-center flex-shrink-0" style="margin-bottom:clamp(4px,1.2vh,20px);">
+          <div class="text-center flex-shrink-0 relative z-10" style="margin-bottom:clamp(4px,1.2vh,20px);">
             <h2 class="font-romantic text-rose-500" style="font-size:clamp(1.15rem,3.5vw,2.2rem); line-height:1.2;">${pageData.title}</h2>
             <p class="font-elegant text-rose-400 italic" style="font-size:clamp(0.6rem,1.6vw,1rem);">${pageData.subtitle}</p>
             <div class="flex items-center justify-center gap-1 mt-1">
@@ -732,55 +884,48 @@
             </div>
           </div>
           
-          <!-- Photos -->
-          <div class="flex-1 min-h-0 ${photoCount === 1 ? 'flex flex-col mx-auto w-full' : layoutClass}" style="${photoCount === 1 ? 'max-width:min(100%,320px);' : ''}">
+          <div class="flex-1 min-h-0 ${photoCount === 1 ? 'flex flex-col mx-auto w-full' : layoutClass} relative z-10" style="${photoCount === 1 ? 'max-width:min(100%,320px);' : ''}">
             ${photosHTML}
           </div>
           
-          <!-- Quote -->
-          <div class="text-center flex-shrink-0" style="margin-top:clamp(4px,1vh,16px);">
+          <div class="text-center flex-shrink-0 relative z-10" style="margin-top:clamp(4px,1vh,16px);">
             <p class="font-body text-rose-400 italic" style="font-size:clamp(0.5rem,1.3vw,0.85rem);">"${pageData.quote}"</p>
           </div>
         </div>
       `;
     }
     
-    // Generate final Valentine page
-    function generateFinalPage() {
+    function generateFinalPage(pageData) {
       return `
-        <div class="h-full flex flex-col items-center justify-center relative overflow-hidden" style="padding:clamp(8px,2vw,32px);">
-          <!-- Decorative background -->
-          <div class="absolute inset-0 opacity-10">
+        <div class="h-full flex flex-col items-center justify-center relative overflow-visible" style="padding:clamp(8px,2vw,32px);">
+          ${generateStickersHTML(pageData.stickerPositions)}
+
+          <div class="absolute inset-0 opacity-10 pointer-events-none">
             <div class="absolute" style="top:8%;left:8%;font-size:clamp(1.5rem,5vw,3.5rem);">❤️</div>
             <div class="absolute" style="top:16%;right:14%;font-size:clamp(1rem,3.5vw,2.5rem);">💕</div>
             <div class="absolute" style="bottom:16%;left:14%;font-size:clamp(1.2rem,4vw,3rem);">💗</div>
             <div class="absolute" style="bottom:8%;right:10%;font-size:clamp(1rem,3.5vw,2.5rem);">💖</div>
           </div>
           
-          <!-- Corner Roses -->
           <div class="corner-rose top-left">${roseSVG}</div>
           <div class="corner-rose bottom-right">${roseSVG}</div>
           
-          <!-- Main Photo Frame -->
-          <div class="photo-frame rounded-full overflow-hidden flex-shrink-0" style="width:clamp(64px,16vw,180px); height:clamp(64px,16vw,180px); margin-bottom:clamp(6px,1.5vh,20px);">
+          <div class="photo-frame ${pageData.frameClass} rounded-full overflow-hidden flex-shrink-0 relative z-10" style="width:clamp(64px,16vw,180px); height:clamp(64px,16vw,180px); margin-bottom:clamp(6px,1.5vh,20px);">
             <img src="${getDummyPhotoUrl('final-special', 600, 600)}" alt="Foto spesial" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
           </div>
           
-          <!-- Title -->
           <h2 class="font-romantic text-rose-500 text-center relative z-10" style="font-size:clamp(1.2rem,4vw,3rem); line-height:1.2; margin-bottom:clamp(2px,0.5vh,8px);">
             Happy Valentine's Day
           </h2>
-          <p class="font-elegant text-rose-400 italic" style="font-size:clamp(0.75rem,2.2vw,1.4rem); margin-bottom:clamp(6px,1.2vh,20px);">My Love ❤️</p>
+          <p class="font-elegant text-rose-400 italic relative z-10" style="font-size:clamp(0.75rem,2.2vw,1.4rem); margin-bottom:clamp(6px,1.2vh,20px);">My Love ❤️</p>
           
-          <!-- Message -->
           <div class="w-full bg-white/50 rounded-2xl shadow-inner relative z-10 overflow-y-auto" style="max-width:min(100%,400px); padding:clamp(6px,1.5vw,20px); max-height:clamp(60px,18vh,180px);">
             <p id="final-message-text" class="font-body text-rose-600 text-center leading-relaxed" style="font-size:clamp(0.55rem,1.4vw,0.9rem);">
               ${config.final_message}
             </p>
           </div>
           
-          <!-- Signature -->
-          <div class="text-center flex-shrink-0" style="margin-top:clamp(4px,1vh,20px);">
+          <div class="text-center flex-shrink-0 relative z-10" style="margin-top:clamp(4px,1vh,20px);">
             <p class="font-romantic text-rose-400" style="font-size:clamp(0.9rem,2.8vw,1.75rem);">With All My Love,</p>
             <p id="final-names" class="font-elegant text-rose-500 italic" style="font-size:clamp(0.7rem,1.8vw,1.2rem); margin-top:2px;">${config.couple_names}</p>
           </div>
@@ -788,7 +933,6 @@
       `;
     }
     
-    // Create all pages
     function createPages() {
       const container = document.getElementById('pages-container');
       container.innerHTML = '';
@@ -801,12 +945,10 @@
         page.style.height = '100%';
         page.dataset.index = index;
         
-        // Front of page
         const front = document.createElement('div');
         front.className = 'page-front paper-texture';
         front.innerHTML = generatePageContent(pageData, index);
         
-        // Back of page (next page preview or pattern)
         const back = document.createElement('div');
         back.className = 'page-back paper-texture';
         if (index < pagesData.length - 1) {
@@ -836,14 +978,12 @@
       });
     }
     
-    // Update page indicator
     function updatePageIndicator() {
       document.getElementById('page-indicator').textContent = `${currentPage + 1} / ${pagesData.length}`;
       document.getElementById('prev-btn').disabled = currentPage === 0;
       document.getElementById('next-btn').disabled = currentPage === pagesData.length - 1;
     }
     
-    // Flip to specific page
     function flipToPage(targetPage) {
       const pages = document.querySelectorAll('.page');
       
@@ -858,7 +998,6 @@
       currentPage = targetPage;
       updatePageIndicator();
       
-      // Show hearts on final page
       if (currentPage === pagesData.length - 1) {
         showFloatingHearts();
       } else {
@@ -866,7 +1005,6 @@
       }
     }
     
-    // Create floating hearts
     function createFloatingHearts() {
       const container = document.getElementById('hearts-container');
       container.innerHTML = '';
@@ -895,7 +1033,6 @@
       document.getElementById('hearts-container').style.display = 'none';
     }
     
-    // Open the book
     function openBook() {
       if (isBookOpen) return;
       
@@ -905,10 +1042,8 @@
       const navigation = document.getElementById('navigation');
       const closeBtn = document.getElementById('close-btn');
       
-      // Open cover animation
       cover.classList.add('opened');
       
-      // Show pages after cover opens
       setTimeout(() => {
         pagesContainer.style.display = 'block';
         navigation.classList.remove('hidden');
@@ -917,7 +1052,6 @@
       }, 800);
     }
     
-    // Close the book
     function closeBook() {
       isBookOpen = false;
       currentPage = 0;
@@ -927,22 +1061,18 @@
       const navigation = document.getElementById('navigation');
       const closeBtn = document.getElementById('close-btn');
       
-      // Reset pages
       document.querySelectorAll('.page').forEach(page => page.classList.remove('flipped'));
       
-      // Hide elements
       navigation.classList.add('hidden');
       closeBtn.classList.add('hidden');
       hideFloatingHearts();
       
-      // Close cover
       setTimeout(() => {
         pagesContainer.style.display = 'none';
         cover.classList.remove('opened');
       }, 100);
     }
     
-    // Touch/Swipe support
     let touchStartX = 0;
     let touchEndX = 0;
     
@@ -952,16 +1082,13 @@
       
       if (Math.abs(diff) > swipeThreshold) {
         if (diff > 0 && currentPage < pagesData.length - 1) {
-          // Swipe left - next page
           flipToPage(currentPage + 1);
         } else if (diff < 0 && currentPage > 0) {
-          // Swipe right - previous page
           flipToPage(currentPage - 1);
         }
       }
     }
     
-    // Apply config to UI
     function applyConfig() {
       document.getElementById('cover-title').textContent = config.book_title;
       document.getElementById('cover-names').textContent = config.couple_names;
@@ -977,11 +1104,9 @@
       }
     }
     
-    // Initialize application
     function init() {
       createPages();
       
-      // Event listeners
       document.getElementById('open-btn').addEventListener('click', (e) => {
         e.stopPropagation();
         openBook();
@@ -998,7 +1123,6 @@
         if (currentPage < pagesData.length - 1) flipToPage(currentPage + 1);
       });
       
-      // Touch events for swipe
       const pagesContainer = document.getElementById('pages-container');
       pagesContainer.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -1009,7 +1133,6 @@
         handleSwipe();
       }, { passive: true });
       
-      // Keyboard navigation
       document.addEventListener('keydown', (e) => {
         if (!isBookOpen) {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -1027,7 +1150,6 @@
         }
       });
       
-      // Click on pages to advance
       pagesContainer.addEventListener('click', (e) => {
         const rect = pagesContainer.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
@@ -1043,7 +1165,6 @@
       applyConfig();
     }
     
-    // Element SDK Integration
     const elementConfig = {
       defaultConfig: defaultConfig,
       
@@ -1051,14 +1172,13 @@
         config = { ...defaultConfig, ...newConfig };
         applyConfig();
         
-        // Regenerate final page if book is open and on final page
         if (isBookOpen && currentPage === pagesData.length - 1) {
           const pages = document.querySelectorAll('.page');
           const lastPage = pages[pages.length - 1];
           if (lastPage) {
             const front = lastPage.querySelector('.page-front');
             if (front) {
-              front.innerHTML = generateFinalPage();
+              front.innerHTML = generateFinalPage(pagesData[pagesData.length - 1]);
             }
           }
         }
@@ -1078,13 +1198,11 @@
       ])
     };
     
-    // Initialize SDK
     if (window.elementSdk) {
       window.elementSdk.init(elementConfig);
     }
     
-    // Start app
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce5935ee250f8d2',t:'MTc3MTE2NjU4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce5eba261d6fde6',t:'MTc3MTE3MDIwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
