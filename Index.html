@@ -29,8 +29,23 @@
     @media (max-height: 500px) {
       .book-wrapper { --book-h: calc(100dvh - 100px); }
     }
-    @media (max-width: 400px) {
-      .book-wrapper { --book-w: 96vw; }
+    @media (max-width: 430px) {
+      .book-wrapper {
+        --book-w: 96vw;
+        --book-h: clamp(300px, calc(100dvh - 130px), 580px);
+      }
+    }
+
+    /* iPhone frame scaling — keep proportions like desktop */
+    @media (max-width: 430px) {
+      .photo-frame.frame-1 { border-width: 2px; padding: 5px; }
+      .photo-frame.frame-2 { border-width: 4px; padding: 4px; }
+      .photo-frame.frame-3 { border-width: 6px; padding: 3px; }
+      .photo-frame.frame-4 { border-width: 3px; padding: 6px; }
+      .photo-frame.frame-5 { border-width: 3px; padding: 5px; }
+      .photo-frame.frame-6 { border-width: 4px; padding: 5px; }
+      .photo-frame.frame-7 { border-width: 2px; padding: 4px; }
+      .photo-frame.frame-8 { border-width: 1px; padding: 3px; }
     }
 
     /* ====== FULL-PAGE ROMANTIC ANIMATED BACKDROP ====== */
@@ -852,7 +867,7 @@
 
         return `
           <div class="flex flex-col min-h-0">
-            <div class="photo-frame ${pageData.frameClass} w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:0;">
+            <div class="photo-frame ${pageData.frameClass} w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:60px;">
               <img src="${src}" alt="${alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
             </div>
             <p class="font-body text-rose-600 text-center mt-1 italic" style="font-size:clamp(0.7rem,1.4vw,0.85rem);">${photo.caption}</p>
