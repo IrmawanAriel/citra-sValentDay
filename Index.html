@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Love Book</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Lora:ital@0;1&amp;display=swap" rel="stylesheet">
+  <style>
+    /* Custom Styles */
+    .font-romantic { font-family: 'Great Vibes', cursive; }
+    .font-elegant { font-family: 'Cormorant Garamond', serif; }
+    .font-body { font-family: 'Lora', serif; }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    /* Book Container */
+    .book-wrapper {
+      perspective: 2000px;
+      transform-style: preserve-3d;
+      --book-w: min(92vw, 700px);
+      --book-h: clamp(300px, calc(100dvh - 160px), 600px);
+      width: var(--book-w);
+      height: var(--book-h);
+    }
+
+    /* Responsive scaling helpers */
+    @media (max-height: 500px) {
+      .book-wrapper { --book-h: calc(100dvh - 100px); }
+    }
+    @media (max-width: 400px) {
+      .book-wrapper { --book-w: 96vw; }
+    }
+
+    /* ====== FULL-PAGE ROMANTIC ANIMATED BACKDROP ====== */
+    .romantic-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Soft animated glow orbs */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0;
+      animation: orbPulse var(--dur, 6s) var(--delay, 0s) ease-in-out infinite;
+    }
+    .glow-orb.o1 { width: 320px; height: 320px; top: 8%; left: 5%; background: rgba(251, 191, 213, 0.55); --dur: 7s; --delay: 0s; }
+    .glow-orb.o2 { width: 260px; height: 260px; top: 55%; right: 3%; background: rgba(253, 230, 138, 0.30); --dur: 9s; --delay: 1.5s; }
+    .glow-orb.o3 { width: 380px; height: 380px; bottom: 5%; left: 25%; background: rgba(244, 143, 177, 0.35); --dur: 8s; --delay: 3s; }
+    .glow-orb.o4 { width: 200px; height: 200px; top: 30%; right: 30%; background: rgba(252, 231, 243, 0.6); --dur: 6s; --delay: 2s; }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.25; transform: scale(0.9); }
+      50% { opacity: 0.65; transform: scale(1.15); }
+    }
+
+    /* Floating hearts — continuous from page load */
+    .scene-heart {
+      position: absolute;
+      bottom: -60px;
+      opacity: 0;
+      animation: sceneFloat var(--dur, 8s) var(--delay, 0s) ease-in-out infinite;
+      user-select: none;
+      filter: blur(0.5px);
+    }
+    @keyframes sceneFloat {
+      0%   { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.6); }
+      15%  { opacity: var(--peak, 0.45); }
+      85%  { opacity: var(--peak, 0.45); }
+      100% { opacity: 0; transform: translateY(-110vh) rotate(var(--rot, 25deg)) scale(1); }
+    }
+
+    /* Drifting petals */
+    .scene-petal {
+      position: absolute;
+      width: var(--sz, 14px);
+      height: var(--sz, 14px);
+      background: radial-gradient(circle, rgba(244,143,177,0.7), rgba(244,143,177,0) 70%);
+      border-radius: 50% 0 50% 50%;
+      opacity: 0;
+      animation: petalDrift var(--dur, 10s) var(--delay, 0s) linear infinite;
+    }
+    @keyframes petalDrift {
+      0%   { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+      10%  { opacity: 0.35; }
+      90%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translate(var(--dx, 80px), var(--dy, -100vh)) rotate(var(--rot, 360deg)); }
+    }
+
+    /* Sparkle dots */
+    .scene-sparkle {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle var(--dur, 3s) var(--delay, 0s) ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 0.7; transform: scale(1); }
+    }
+
+    /* Hyper-realistic layered book shadow */
+    .book-shadow {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .book-shadow::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.22);
+      transform: translateY(18px) translateX(12px);
+      filter: blur(24px);
+    }
+    .book-shadow::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.12);
+      transform: translateY(8px) translateX(4px);
+      filter: blur(14px);
+    }
+    
+    .book {
+      transform-style: preserve-3d;
+      transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    
+    .book.closed {
+      transform: rotateY(0deg);
+    }
+    
+    .book.opening {
+      animation: bookOpen 1.5s ease-out forwards;
+    }
+    
+    @keyframes bookOpen {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(-10deg); }
+    }
+    
+    /* Page Styles */
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+    
+    .page-front, .page-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 0 8px 8px 0;
+      overflow: hidden;
+    }
+    
+    .page-back {
+      transform: rotateY(180deg);
+    }
+    
+    /* page rotation handled by JS physics engine */
+    
+    /* Cover Animation */
+    .cover {
+      transform-origin: left center;
+      transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+    
+    .cover.opened {
+      transform: rotateY(-160deg);
+    }
+
+    .cover.opened { pointer-events: none; }
+    
+    .cover-front, .cover-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 0 12px 12px 0;
+    }
+    
+    .cover-back {
+      transform: rotateY(180deg);
+    }
+    
+    /* Hyper-realistic aged paper texture */
+    .paper-texture {
+      background:
+        /* subtle fiber grain */
+        repeating-linear-gradient(0deg,   rgba(180,150,110,0.03) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg,  rgba(180,150,110,0.02) 0 1px, transparent 1px 4px),
+        /* warm parchment base */
+        linear-gradient(135deg, #fef7ed 0%, #fdf0e2 20%, #fef9f3 45%, #fbecd8 70%, #fef7ed 100%);
+      box-shadow:
+        inset 0 0 80px rgba(139, 90, 43, 0.10),
+        inset 0 0 20px rgba(180, 140, 80, 0.06);
+      position: relative;
+    }
+    .paper-texture::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      mix-blend-mode: multiply;
+    }
+    
+    /* Decorative Elements */
+    .corner-rose {
+      position: absolute;
+      width: clamp(40px, 8vw, 80px);
+      height: clamp(40px, 8vw, 80px);
+      opacity: 0.6;
+    }
+    
+    .corner-rose.top-left {
+      top: 6px;
+      left: 6px;
+      transform: rotate(0deg);
+    }
+    
+    .corner-rose.bottom-right {
+      bottom: 6px;
+      right: 6px;
+      transform: rotate(180deg);
+    }
+    
+    /* Photo Frame */
+    .photo-frame {
+      border: 3px solid #d4a574;
+      box-shadow: 
+        0 0 0 1px #f5e6d3,
+        0 0 0 4px #d4a574,
+        0 4px 20px rgba(139, 90, 43, 0.2);
+      background: linear-gradient(135deg, #fef7ed, #fff);
+      padding: 8px;
+    }
+    
+    .photo-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Heart Animation */
+    .floating-heart {
+      position: absolute;
+      animation: floatHeart 4s ease-in-out infinite;
+      opacity: 0;
+    }
+    
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100%) scale(0);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100%) scale(1);
+        opacity: 0;
+      }
+    }
+    
+    /* Navigation Arrows */
+    .nav-arrow {
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+    
+    .nav-arrow:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    
+    /* Gold Ornament */
+    .gold-ornament {
+      color: #c9a959;
+      text-shadow: 0 1px 2px rgba(201, 169, 89, 0.3);
+    }
+    
+    /* Hyper-realistic book spine with stitching & leather grain */
+    .book-spine {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 22px;
+      height: 100%;
+      background:
+        /* leather grain micro-texture */
+        repeating-linear-gradient(180deg, rgba(255,255,255,0.04) 0 1px, rgba(0,0,0,0.06) 1px 2px),
+        /* depth bands */
+        linear-gradient(90deg,
+          #5c2e0e 0%,
+          #7a3b15 15%,
+          #a0522d 40%,
+          #8b4513 55%,
+          #6e3410 78%,
+          #5a2a0c 100%);
+      border-radius: 12px 0 0 12px;
+      box-shadow:
+        inset -3px 0 6px rgba(0,0,0,0.4),
+        inset 2px 0 4px rgba(255,220,160,0.12),
+        2px 0 8px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+    /* Spine stitching line */
+    .book-spine::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      transform: translateX(-50%);
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(201,169,89,0.5) 0 4px,
+        transparent 4px 8px
+      );
+      border-radius: 1px;
+    }
+    /* Top & bottom spine bands */
+    .book-spine::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      top: 0; height: 100%;
+      background:
+        linear-gradient(180deg, rgba(201,169,89,0.25) 0 6px, transparent 6px 12px, transparent calc(100% - 12px), rgba(201,169,89,0.25) calc(100% - 6px) 100%);
+      border-radius: 12px 0 0 12px;
+    }
+    
+    /* Swipe hint animation */
+    .swipe-hint {
+      animation: swipeHint 2s ease-in-out infinite;
+    }
+    
+    @keyframes swipeHint {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+    
+    /* Hyper-realistic cover — rich fabric/leather base */
+    .cover-gradient {
+      background:
+        /* fabric weave micro-pattern */
+        repeating-linear-gradient(0deg,   rgba(255,255,255,0.02) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg,  rgba(0,0,0,0.03)       0 1px, transparent 1px 3px),
+        /* rich velvet-like gradient */
+        linear-gradient(145deg,
+          #d14468 0%,
+          #b8355a 12%,
+          #a02d4e 28%,
+          #8b1e3f 50%,
+          #751836 68%,
+          #6d1633 82%,
+          #5a1128 100%);
+    }
+
+    /* Cover pseudo layers for depth & realism */
+    .cover-front, .cover-back {
+      overflow: hidden;
+      position: absolute;
+    }
+
+    /* Layer 1: noise grain + directional light */
+    .cover-front::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.28;
+      background:
+        /* fine noise grain */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"),
+        /* top-left light source */
+        radial-gradient(ellipse 120% 80% at 15% 10%, rgba(255,255,255,0.18), transparent 55%),
+        /* bottom-right ambient shadow */
+        radial-gradient(ellipse 120% 90% at 85% 90%, rgba(0,0,0,0.14), transparent 55%);
+      background-size: 150px 150px, 100% 100%, 100% 100%;
+      mix-blend-mode: overlay;
+    }
+
+    /* Layer 2: edge lighting & inner shadow for 3D feel */
+    .cover-front::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        /* left edge highlight (light catching the edge) */
+        linear-gradient(90deg, rgba(255,220,180,0.12) 0%, transparent 8%),
+        /* right edge shadow */
+        linear-gradient(270deg, rgba(0,0,0,0.10) 0%, transparent 12%),
+        /* top sheen */
+        linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 20%),
+        /* bottom shadow */
+        linear-gradient(0deg, rgba(0,0,0,0.08) 0%, transparent 15%);
+    }
+
+    .cover-back::before {
+      content: "";
+      position: absolute; inset: 0; pointer-events: none;
+      opacity: 0.10;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
+    }
+    
+    /* Embossed gold vintage border */
+    .vintage-border {
+      border: 2px solid rgba(201, 169, 89, 0.55);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,240,200,0.15),
+        inset 0 0 0 4px rgba(201, 169, 89, 0.22),
+        inset 0 0 0 5px rgba(255,240,200,0.08),
+        inset 0 0 0 8px rgba(201, 169, 89, 0.10),
+        inset 0 0 30px rgba(0,0,0,0.08);
+    }
+
+    /* Page edge effect — visible fanned pages on the right */
+    .book::before {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: 4px;
+      bottom: 4px;
+      width: 6px;
+      z-index: 99;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(180deg,
+          #f8eed8 0 1px,
+          #e8dbc4 1px 2px,
+          #f2e6d0 2px 3px
+        );
+      border-radius: 0 3px 3px 0;
+      box-shadow:
+        1px 0 2px rgba(0,0,0,0.08),
+        inset -1px 0 1px rgba(0,0,0,0.05);
+    }
+
+    /* ====== DYNAMIC PAGE-FLIP SHADOW ====== */
+    .page-flip-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      border-radius: 0 8px 8px 0;
+      opacity: 0;
+      will-change: opacity;
+    }
+
+    /* ====== DYNAMIC BOOK SHADOW ENHANCEMENT ====== */
+    .book-shadow {
+      --lift: 0px;
+      --spread: 0px;
+    }
+    .book-shadow::before {
+      transform: translateY(calc(18px + var(--lift, 0px))) translateX(calc(12px + var(--spread, 0px)));
+    }
+
+    /* ====== AUDIO TOGGLE ====== */
+    .audio-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(244,143,177,0.25);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .audio-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+    }
+    .audio-toggle:active { transform: scale(0.95); }
+    .audio-bars {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 16px;
+    }
+    .audio-bars span {
+      display: block;
+      width: 3px;
+      border-radius: 2px;
+      background: #e11d48;
+      animation: audioBar 0.7s ease-in-out infinite alternate;
+    }
+    .audio-bars span:nth-child(1) { height: 6px;  animation-delay: 0s; }
+    .audio-bars span:nth-child(2) { height: 14px; animation-delay: 0.12s; }
+    .audio-bars span:nth-child(3) { height: 9px;  animation-delay: 0.25s; }
+    .audio-bars span:nth-child(4) { height: 12px; animation-delay: 0.08s; }
+    .audio-toggle.paused .audio-bars span {
+      animation: none;
+      height: 3px !important;
+    }
+    @keyframes audioBar {
+      from { transform: scaleY(0.3); }
+      to   { transform: scaleY(1); }
+    }
+
+    /* ====== CINEMATIC REVEAL (final page) ====== */
+    .cinematic-reveal {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    /* ====== PREFERS REDUCED MOTION ====== */
+    @media (prefers-reduced-motion: reduce) {
+      .page { transition: transform 0.3s ease !important; }
+      .cover { transition: transform 0.5s ease !important; }
+      .scene-heart, .scene-petal, .scene-sparkle, .glow-orb,
+      .floating-heart, .swipe-hint { animation: none !important; }
+      .glow-orb { opacity: 0.3 !important; }
+      .audio-bars span { animation: none !important; }
+      .cinematic-reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <!-- ====== ROMANTIC ANIMATED SCENE (runs from page load) ====== -->
+  <div class="romantic-scene" aria-hidden="true">
+    <!-- Glow orbs -->
+    <div class="glow-orb o1"></div>
+    <div class="glow-orb o2"></div>
+    <div class="glow-orb o3"></div>
+    <div class="glow-orb o4"></div>
+    <!-- Floating hearts -->
+    <div class="scene-heart" style="left:6%;  font-size:28px; --dur:9s;  --delay:0s;   --rot:20deg;  --peak:0.40; color:rgba(244,143,177,0.5);">♥</div>
+    <div class="scene-heart" style="left:18%; font-size:18px; --dur:11s; --delay:2s;   --rot:-15deg; --peak:0.30; color:rgba(251,191,213,0.5);">♥</div>
+    <div class="scene-heart" style="left:32%; font-size:24px; --dur:8s;  --delay:1s;   --rot:30deg;  --peak:0.35; color:rgba(244,143,177,0.45);">♥</div>
+    <div class="scene-heart" style="left:48%; font-size:20px; --dur:12s; --delay:3.5s; --rot:-25deg; --peak:0.28; color:rgba(253,164,196,0.4);">♥</div>
+    <div class="scene-heart" style="left:62%; font-size:30px; --dur:10s; --delay:0.5s; --rot:18deg;  --peak:0.38; color:rgba(244,143,177,0.45);">♥</div>
+    <div class="scene-heart" style="left:78%; font-size:16px; --dur:9s;  --delay:4s;   --rot:-20deg; --peak:0.32; color:rgba(251,191,213,0.5);">♥</div>
+    <div class="scene-heart" style="left:90%; font-size:22px; --dur:11s; --delay:1.8s; --rot:28deg;  --peak:0.36; color:rgba(244,143,177,0.4);">♥</div>
+    <div class="scene-heart" style="left:12%; font-size:14px; --dur:13s; --delay:5s;   --rot:-12deg; --peak:0.25; color:rgba(253,164,196,0.4);">♥</div>
+    <div class="scene-heart" style="left:55%; font-size:26px; --dur:10s; --delay:2.5s; --rot:22deg;  --peak:0.33; color:rgba(244,143,177,0.42);">♥</div>
+    <div class="scene-heart" style="left:85%; font-size:20px; --dur:8.5s;--delay:3s;   --rot:-18deg; --peak:0.30; color:rgba(251,191,213,0.45);">♥</div>
+    <!-- Drifting petals -->
+    <div class="scene-petal" style="left:10%; top:15%; --sz:16px; --dur:14s; --delay:0s;   --dx:60px;  --dy:-110vh; --rot:400deg;"></div>
+    <div class="scene-petal" style="left:25%; top:5%;  --sz:12px; --dur:12s; --delay:2s;   --dx:-40px; --dy:-105vh; --rot:-320deg;"></div>
+    <div class="scene-petal" style="left:42%; top:20%; --sz:18px; --dur:16s; --delay:1s;   --dx:80px;  --dy:-115vh; --rot:450deg;"></div>
+    <div class="scene-petal" style="left:60%; top:8%;  --sz:10px; --dur:11s; --delay:3.5s; --dx:-50px; --dy:-108vh; --rot:-280deg;"></div>
+    <div class="scene-petal" style="left:75%; top:18%; --sz:14px; --dur:13s; --delay:0.5s; --dx:70px;  --dy:-112vh; --rot:360deg;"></div>
+    <div class="scene-petal" style="left:88%; top:12%; --sz:11px; --dur:15s; --delay:4s;   --dx:-30px; --dy:-100vh; --rot:-400deg;"></div>
+    <!-- Sparkles -->
+    <div class="scene-sparkle" style="top:20%; left:15%; --dur:3s;  --delay:0s;"></div>
+    <div class="scene-sparkle" style="top:35%; left:80%; --dur:4s;  --delay:1.5s;"></div>
+    <div class="scene-sparkle" style="top:65%; left:25%; --dur:3.5s;--delay:2.5s;"></div>
+    <div class="scene-sparkle" style="top:50%; left:60%; --dur:2.8s;--delay:0.8s;"></div>
+    <div class="scene-sparkle" style="top:75%; left:45%; --dur:3.2s;--delay:3.8s;"></div>
+    <div class="scene-sparkle" style="top:15%; left:70%; --dur:4.2s;--delay:1s;"></div>
+    <div class="scene-sparkle" style="top:85%; left:55%; --dur:3s;  --delay:2s;"></div>
+    <div class="scene-sparkle" style="top:40%; left:40%; --dur:3.8s;--delay:4.5s;"></div>
+  </div>
+
+  <div id="app" class="h-full w-full overflow-x-hidden overflow-y-auto relative" style="background: linear-gradient(135deg, rgba(252,228,236,0.85) 0%, rgba(248,187,217,0.80) 50%, rgba(244,143,177,0.82) 100%); z-index: 1;"><!-- Main Container -->
+   <div class="min-h-full w-full flex flex-col items-center justify-center p-3 md:p-6"><!-- Book Container -->
+    <div class="book-wrapper relative"><!-- Book Shadow -->
+     <div class="book-shadow" aria-hidden="true"></div><!-- Main Book -->
+     <div id="book" class="book closed relative w-full h-full" style="z-index: 2;"><!-- Book Spine -->
+      <div class="book-spine"></div><!-- Cover -->
+      <div id="cover" class="cover absolute inset-0 cursor-pointer z-50"><!-- Cover Front -->
+       <div class="cover-front cover-gradient vintage-border rounded-r-xl flex flex-col items-center justify-center" style="padding:clamp(12px,3vw,40px);"><!-- Gold Corner Decorations -->
+        <svg class="absolute gold-ornament" style="top:clamp(8px,1.5vw,16px);left:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor"><path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
+        </svg>
+        <svg class="absolute gold-ornament rotate-180" style="bottom:clamp(8px,1.5vw,16px);right:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor"><path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
+        </svg><!-- Heart Icon -->
+        <div style="margin-bottom:clamp(6px,1.5vh,24px);">
+         <svg class="text-pink-200" style="width:clamp(36px,8vw,80px);height:clamp(36px,8vw,80px);" fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+         </svg>
+        </div><!-- Title -->
+        <h1 id="cover-title" class="font-romantic text-center text-pink-100" style="font-size:clamp(1.6rem,5.5vw,3.8rem); text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:clamp(4px,1vh,16px); line-height:1.15;">Our Love Story</h1><!-- Ornament Line -->
+        <div class="flex items-center gap-2" style="margin-bottom:clamp(4px,1vh,16px);">
+         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div><span class="text-amber-300" style="font-size:clamp(0.8rem,1.8vw,1.25rem);">♥</span>
+         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div>
+        </div><!-- Names -->
+        <p id="cover-names" class="font-elegant text-pink-200 italic" style="font-size:clamp(0.9rem,2.5vw,1.5rem); margin-bottom:clamp(10px,2vh,32px);">Andi &amp; Bella</p><!-- Open Button --> <button id="open-btn" class="group relative bg-gradient-to-r from-amber-200 to-amber-300 text-rose-800 font-elegant font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" style="padding:clamp(6px,1.2vh,12px) clamp(16px,3.5vw,32px); font-size:clamp(0.75rem,1.8vw,1.1rem);"> <span class="flex items-center gap-2"> <span>Open Our Story</span>
+          <svg class="w-4 h-4 md:w-5 md:h-5 swipe-hint" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg></span> </button>
+       </div><!-- Cover Back (Inside) -->
+       <div class="cover-back paper-texture rounded-r-xl p-4 md:p-6 flex items-center justify-center">
+        <div class="text-center">
+         <p class="font-elegant text-rose-400 italic" style="font-size:clamp(0.8rem,2vw,1.15rem); line-height:1.6;">"Every love story is beautiful,<br>
+          but ours is my favorite."</p>
+        </div>
+       </div>
+      </div><!-- Pages Container -->
+      <div id="pages-container" class="absolute inset-0 ml-5" style="display: none;"><!-- Pages will be generated by JavaScript -->
+      </div><!-- Back Cover -->
+      <div class="absolute inset-0 paper-texture rounded-r-xl">
+       <div class="absolute inset-4 border-2 border-rose-200 rounded-lg opacity-50"></div>
+      </div>
+     </div><!-- Close/Reset Button --> <button id="close-btn" class="hidden absolute top-2 right-2 md:top-3 md:right-3 z-50 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/80 backdrop-blur shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all">
+      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+    </div><!-- Navigation (shown after book opens) -->
+    <div id="navigation" class="hidden flex items-center justify-center gap-3 md:gap-4 mt-3 md:mt-4 z-50 flex-shrink-0"><button id="prev-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+       </svg></button> <span id="page-indicator" class="font-elegant text-white text-xs md:text-sm bg-rose-400/80 px-3 py-1 rounded-full shadow"> 1 / 5 </span> <button id="next-btn" class="nav-arrow w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 disabled:opacity-30 disabled:cursor-not-allowed">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+       </svg></button>
+    </div>
+   </div><!-- Floating Hearts (Final Page) -->
+   <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden" style="display: none;"><!-- Hearts will be generated by JavaScript -->
+   </div>
+  </div>
+  <script src="js/app.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce5935ee250f8d2',t:'MTc3MTE2NjU4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
