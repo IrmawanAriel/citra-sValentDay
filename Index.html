@@ -624,7 +624,7 @@
      <div id="book" class="book closed relative w-full h-full" style="z-index: 2;">
       <div class="book-spine"></div>
       <div id="cover" class="cover absolute inset-0 cursor-pointer z-50">
-       <div class="cover-front cover-gradient vintage-border rounded-r-xl flex flex-col items-center justify-center" style="padding:clamp(12px,3vw,40px);">
+       <div class="cover-front cover-gradient vintage-border rounded-r-xl flex flex-col items-center justify-center" style="padding:clamp(16px,4vw,48px);">
         <div class="sticker medium float" style="top:clamp(4px,3vw,20px);right:clamp(8px,4vw,28px);">
          🌹
         </div>
@@ -643,17 +643,17 @@
         <svg class="absolute gold-ornament rotate-180" style="bottom:clamp(8px,1.5vw,16px);right:clamp(8px,1.5vw,16px);width:clamp(36px,7vw,80px);height:clamp(36px,7vw,80px);" viewbox="0 0 100 100" fill="currentColor">
          <path d="M10,50 Q10,10 50,10 Q30,30 30,50 Q30,70 10,50 M50,10 Q90,10 90,50 Q70,30 50,30 Q30,30 50,10" opacity="0.6" />
         </svg>
-        <div style="margin-bottom:clamp(6px,1.5vh,24px);">
-         <svg class="text-pink-200" style="width:clamp(36px,8vw,80px);height:clamp(36px,8vw,80px);" fill="currentColor" viewbox="0 0 24 24">
+        <div style="margin-bottom:clamp(8px,2vh,28px);">
+         <svg class="text-pink-200" style="width:clamp(44px,10vw,96px);height:clamp(44px,10vw,96px);" fill="currentColor" viewbox="0 0 24 24">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
          </svg>
         </div>
-        <h1 id="cover-title" class="font-romantic text-center text-pink-100" style="font-size:clamp(1.6rem,5.5vw,3.8rem); text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:clamp(4px,1vh,16px); line-height:1.15;">Our Love Story</h1>
+        <h1 id="cover-title" class="font-romantic text-center text-pink-100" style="font-size:clamp(1.85rem,6.5vw,4.2rem); text-shadow:2px 2px 4px rgba(0,0,0,0.3); margin-bottom:clamp(6px,1.2vh,18px); line-height:1.15;">Our Love Story</h1>
         <div class="flex items-center gap-2" style="margin-bottom:clamp(4px,1vh,16px);">
-         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div><span class="text-amber-300" style="font-size:clamp(0.8rem,1.8vw,1.25rem);">♥</span>
-         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(24px,6vw,80px);"></div>
+         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(30px,7vw,90px);"></div><span class="text-amber-300" style="font-size:clamp(0.9rem,2vw,1.4rem);">♥</span>
+         <div class="h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent" style="width:clamp(30px,7vw,90px);"></div>
         </div>
-        <p id="cover-names" class="font-elegant text-pink-200 italic" style="font-size:clamp(0.9rem,2.5vw,1.5rem); margin-bottom:clamp(10px,2vh,32px);">Andi &amp; Bella</p><button id="open-btn" class="group relative bg-gradient-to-r from-amber-200 to-amber-300 text-rose-800 font-elegant font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" style="padding:clamp(6px,1.2vh,12px) clamp(16px,3.5vw,32px); font-size:clamp(0.75rem,1.8vw,1.1rem);"> <span class="flex items-center gap-2"> <span>Open Our Story</span>
+        <p id="cover-names" class="font-elegant text-pink-200 italic" style="font-size:clamp(1.05rem,2.8vw,1.7rem); margin-bottom:clamp(12px,2.5vh,36px);">Andi &amp; Bella</p><button id="open-btn" class="group relative bg-gradient-to-r from-amber-200 to-amber-300 text-rose-800 font-elegant font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" style="padding:clamp(8px,1.4vh,14px) clamp(20px,4vw,36px); font-size:clamp(0.85rem,2vw,1.2rem);"> <span class="flex items-center gap-2"> <span>Open Our Story</span>
           <svg class="w-4 h-4 md:w-5 md:h-5 swipe-hint" fill="none" stroke="currentColor" viewbox="0 0 24 24">
            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg></span> </button>
@@ -868,7 +868,7 @@
           : 'grid grid-cols-3 gap-2';
       
       return `
-        <div class="h-full flex flex-col relative overflow-visible" style="padding:clamp(8px,2vw,24px); padding-top:clamp(6px,1.5vw,20px);">
+        <div class="h-full flex flex-col relative overflow-visible" style="padding:clamp(14px,3vw,28px); padding-top:clamp(10px,2vw,24px);">
           ${generateStickersHTML(pageData.stickerPositions)}
 
           <div class="corner-rose top-left opacity-40">${roseSVG}</div>
@@ -897,7 +897,7 @@
     
     function generateFinalPage(pageData) {
       return `
-        <div class="h-full flex flex-col items-center justify-center relative overflow-visible" style="padding:clamp(8px,2vw,32px);">
+        <div class="h-full flex flex-col items-center justify-center relative overflow-visible" style="padding:clamp(14px,3vw,36px);">
           ${generateStickersHTML(pageData.stickerPositions)}
 
           <div class="absolute inset-0 opacity-10 pointer-events-none">
