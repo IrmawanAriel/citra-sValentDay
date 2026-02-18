@@ -728,8 +728,16 @@
         ],
         photos: [
           {
-            placeholder: "First Meeting",
-            caption: "Hari di mana takdir mempertemukan kita"
+            url: "assets/firstdatebgt.jpeg",
+            alt: "First date banget",
+            placeholder: "firstdatebgt",
+            caption: "First date kita — deg-degan tapi bahagia."
+          },
+          {
+            url: "assets/firstdateOnvib.jpeg",
+            alt: "First date on vibe",
+            placeholder: "firstdateOnvib",
+            caption: "First date vibes — semuanya terasa pas."
           }
         ],
         quote: "From the moment I saw you, I knew my heart would never be the same."
@@ -748,12 +756,16 @@
         ],
         photos: [
           {
-            placeholder: "Sweet Memory 1",
-            caption: "Senyummu adalah matahariku"
+            url: "assets/fotoPalingCute.jpeg",
+            alt: "Foto paling cute",
+            placeholder: "fotoPalingCute",
+            caption: "Foto paling cute — favoritku selamanya."
           },
           {
-            placeholder: "Sweet Memory 2", 
-            caption: "Bersama dalam suka dan duka"
+            url: "assets/keBragaPalingberkesan.jpeg",
+            alt: "Ke Braga paling berkesan",
+            placeholder: "keBragaPalingberkesan",
+            caption: "Ke Braga — salah satu momen paling berkesan."
           }
         ],
         quote: "Every moment with you is a treasure I hold close to my heart."
@@ -772,16 +784,16 @@
         ],
         photos: [
           {
-            placeholder: "Adventure 1",
-            caption: "Menjelajah dunia bersama"
+            url: "assets/wisudabersama.jpeg",
+            alt: "Wisuda bersama",
+            placeholder: "wisudabersama",
+            caption: "Wisuda bersama — bangga banget sama kamu."
           },
           {
-            placeholder: "Adventure 2",
-            caption: "Setiap perjalanan bersamamu adalah rumah"
-          },
-          {
-            placeholder: "Adventure 3",
-            caption: "Kenangan yang tak terlupakan"
+            url: "assets/melihatCalonIstri.jpeg",
+            alt: "Melihat calon istri",
+            placeholder: "melihatCalonIstri",
+            caption: "Melihat calon istri — hatiku makin yakin."
           }
         ],
         quote: "Life is an adventure, and I'm glad I'm on this journey with you."
@@ -800,8 +812,10 @@
         ],
         photos: [
           {
-            placeholder: "Special Day",
-            caption: "Hari yang sangat berarti"
+            url: "assets/SeeingYouAsmywife.jpeg",
+            alt: "Seeing you as my wife",
+            placeholder: "SeeingYouAsmywife",
+            caption: "Seeing you as my wife — masa depan yang aku mau."
           }
         ],
         quote: "Some days are just more magical with you by my side."
@@ -812,6 +826,8 @@
         title: "Happy Valentine's Day",
         subtitle: "My Love ❤️",
         frameClass: 'frame-5',
+        photoUrl: "assets/loveliestPerson.jpeg",
+        photoAlt: "Loveliest person",
         stickers: ['💕', '🌹', '💝', '✨'],
         stickerPositions: [
           { emoji: '💕', class: 'large float', style: 'top:12%;right:8%;' },
@@ -911,6 +927,8 @@
     }
     
     function generateFinalPage(pageData) {
+      const finalSrc = pageData.photoUrl || getDummyPhotoUrl('final-special', 600, 600);
+      const finalAlt = pageData.photoAlt || 'Foto spesial';
       return `
         <div class="h-full flex flex-col items-center justify-center relative overflow-visible" style="padding:clamp(14px,3vw,36px);">
           ${generateStickersHTML(pageData.stickerPositions)}
@@ -926,7 +944,7 @@
           <div class="corner-rose bottom-right">${roseSVG}</div>
           
           <div class="photo-frame ${pageData.frameClass} rounded-full overflow-hidden flex-shrink-0 relative z-10" style="width:clamp(64px,16vw,180px); height:clamp(64px,16vw,180px); margin-bottom:clamp(6px,1.5vh,20px);">
-            <img src="${getDummyPhotoUrl('final-special', 600, 600)}" alt="Foto spesial" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+            <img src="${finalSrc}" alt="${finalAlt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
           </div>
           
           <h2 class="font-romantic text-rose-500 text-center relative z-10" style="font-size:clamp(1.2rem,4vw,3rem); line-height:1.2; margin-bottom:clamp(2px,0.5vh,8px);">
