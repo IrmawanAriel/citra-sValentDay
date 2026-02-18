@@ -36,7 +36,7 @@
       }
     }
 
-    /* iPhone frame scaling — keep proportions like desktop */
+    /* iPhone / mobile frame scaling */
     @media (max-width: 430px) {
       .photo-frame.frame-1 { border-width: 2px; padding: 5px; }
       .photo-frame.frame-2 { border-width: 4px; padding: 4px; }
@@ -46,6 +46,37 @@
       .photo-frame.frame-6 { border-width: 4px; padding: 5px; }
       .photo-frame.frame-7 { border-width: 2px; padding: 4px; }
       .photo-frame.frame-8 { border-width: 1px; padding: 3px; }
+
+      /* Larger photos on mobile */
+      .photo-frame {
+        min-height: 100px !important;
+      }
+      .photo-frame img {
+        min-height: 100px;
+      }
+
+      /* Stack 2-photo grid vertically on small screens */
+      .mobile-stack-photos {
+        grid-template-columns: 1fr !important;
+        gap: 6px !important;
+      }
+
+      /* Bigger final page photo */
+      .final-photo-frame {
+        width: clamp(100px, 30vw, 200px) !important;
+        height: clamp(100px, 30vw, 200px) !important;
+      }
+    }
+
+    /* Tablet-ish devices */
+    @media (max-width: 768px) and (min-width: 431px) {
+      .photo-frame {
+        min-height: 90px !important;
+      }
+      .final-photo-frame {
+        width: clamp(80px, 20vw, 200px) !important;
+        height: clamp(80px, 20vw, 200px) !important;
+      }
     }
 
     /* ====== FULL-PAGE ROMANTIC ANIMATED BACKDROP ====== */
@@ -730,8 +761,8 @@
         stickerPositions: [
           { emoji: '💑', class: 'medium bounce', style: 'top:5%;right:8%;' },
           { emoji: '✨', class: 'small spin', style: 'top:12%;left:6%;' },
-          { emoji: '💕', class: 'medium float', style: 'bottom:8%;right:10%;' },
-          { emoji: '🌹', class: 'small tilt', style: 'bottom:12%;left:8%;' }
+          // { emoji: '💕', class: 'medium float', style: 'bottom:8%;right:10%;' },
+          // { emoji: '🌹', class: 'small tilt', style: 'bottom:12%;left:8%;' }
         ],
         photos: [
           {
@@ -758,8 +789,8 @@
         stickerPositions: [
           { emoji: '🌸', class: 'small float', style: 'top:8%;right:10%;' },
           { emoji: '💖', class: 'medium tilt', style: 'top:15%;left:8%;' },
-          { emoji: '🎀', class: 'small bounce', style: 'bottom:10%;right:8%;' },
-          { emoji: '💐', class: 'medium spin', style: 'bottom:15%;left:10%;' }
+          // { emoji: '🎀', class: 'small bounce', style: 'bottom:10%;right:8%;' },
+          // { emoji: '💐', class: 'medium spin', style: 'bottom:15%;left:10%;' }
         ],
         photos: [
           {
@@ -800,7 +831,7 @@
             url: "assets/melihatCalonIstri.jpeg",
             alt: "Melihat calon istri",
             placeholder: "melihatCalonIstri",
-            caption: "Fast-forward kedepan. Akhirnya kita bener-bener berhasil berjuang melawan LDR yang sangat kejam. first day kita ketemu, Itu dalah hari <b>Terindah</b> menurut ku selama kamu di sini. Aku rasa pada saat itu perasaan kita bener-bener ada di puncaknya. aku bahkan gapercaaya, kalau Tuhan ternyata memberikanku kado se-indah <b>'hari itu'</b>. i love u sayang 💖."
+            caption: "Fast-forward kedepan. Akhirnya kita bener-bener berhasil berjuang melawan LDR yang sangat kejam. first day kita ketemu, Itu dalah hari <b>Terindah</b> menurut ku selama kamu di sini. Aku rasa pada saat itu perasaan kita bener-bener ada di puncaknya. aku bahkan gapercaaya, kalau Tuhan ternyata memberikan aku kado se-indah <b>'hari itu'</b>. i love u sayang 💖."
           }
         ],
         quote: "Life is an adventure, and I'm glad I'm on this journey with you."
@@ -822,7 +853,7 @@
             url: "assets/SeeingYouAsmywife.jpeg",
             alt: "Seeing you as my wife",
             placeholder: "SeeingYouAsmywife",
-            caption: "Banyak banget perbedaan dari dalam karakter kita sayang, bahkan terkadang ada beberapa yang 180 derajat wkkww, tapi kamu tau? setiap perbedaan dan kelebihan kita tuh kaya puzzel yang benar-benar saling melengkapi. setiap kekurangan yang kita punya, kita bisa terima semuanya dengan baik,<b> And in that moment, I truly saw you as my wife, Citra sayang. Even if I died, I’d still find my way back to you and choose you—again and again. 😊❤️💕</b>"
+            caption: "Banyak banget perbedaan dari dalam karakter kita sayang, bahkan terkadang ada beberapa yang 180 drajat wkkww, tapi kamu tau? setiap perbedaan dan kelebihan kita tuh kaya puzzel yang benar-benar saling melengkapi. setiap kekurangan yang kita punya, kita bisa terima semuanya dengan baik,<b> And in that moment, I truly saw you as my wife, Citra sayang. Even if I died, I’d still find my way back to you and choose you—again and again. 😊❤️💕</b>"
           }
         ],
         quote: "Some days are just more magical with you by my side."
@@ -890,7 +921,7 @@
 
         return `
           <div class="flex flex-col min-h-0">
-            <div class="photo-frame ${pageData.frameClass} w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:60px;">
+            <div class="photo-frame ${pageData.frameClass} w-full overflow-hidden rounded-lg" style="aspect-ratio:4/3; min-height:80px;">
               <img src="${src}" alt="${alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
             </div>
             <p class="font-body text-rose-600 text-center mt-1 italic" style="font-size:clamp(0.7rem,1.4vw,0.85rem);">${photo.caption}</p>
@@ -902,8 +933,8 @@
       const layoutClass = photoCount === 1
         ? 'flex flex-col'
         : photoCount === 2
-          ? 'grid grid-cols-2 gap-2 md:gap-3'
-          : 'grid grid-cols-3 gap-2';
+          ? 'grid grid-cols-2 gap-2 md:gap-3 mobile-stack-photos'
+          : 'grid grid-cols-3 gap-2 mobile-stack-photos';
       
       return `
         <div class="h-full flex flex-col relative overflow-visible" style="padding:clamp(14px,3vw,28px); padding-top:clamp(10px,2vw,24px);">
@@ -950,7 +981,7 @@
           <div class="corner-rose top-left">${roseSVG}</div>
           <div class="corner-rose bottom-right">${roseSVG}</div>
           
-          <div class="photo-frame ${pageData.frameClass} rounded-full overflow-hidden flex-shrink-0 relative z-10" style="width:clamp(64px,16vw,180px); height:clamp(64px,16vw,180px); margin-bottom:clamp(6px,1.5vh,20px);">
+          <div class="photo-frame final-photo-frame ${pageData.frameClass} rounded-full overflow-hidden flex-shrink-0 relative z-10" style="width:clamp(80px,22vw,200px); height:clamp(80px,22vw,200px); margin-bottom:clamp(6px,1.5vh,20px);">
             <img src="${finalSrc}" alt="${finalAlt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
           </div>
           
