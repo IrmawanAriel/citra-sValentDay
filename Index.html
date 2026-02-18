@@ -706,6 +706,13 @@
     </div>
    </div>
    <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden" style="display: none;"></div>
+
+   <!-- Background Music -->
+   <audio id="bg-music" src="assets/ChangeYaMind.mp3" loop preload="auto"></audio>
+   <button id="music-toggle" class="fixed bottom-4 right-4 z-[999] w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/80 backdrop-blur shadow-lg flex items-center justify-center text-rose-500 hover:bg-rose-50 transition-all" title="Mute / Unmute">
+     <svg id="music-icon-on" class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M17.95 6.05a8 8 0 010 11.9M11 5L6 9H2v6h4l5 4V5z"/></svg>
+     <svg id="music-icon-off" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+   </button>
   </div>
   <script>
     const defaultConfig = {
@@ -765,7 +772,7 @@
             url: "assets/keBragaPalingberkesan.jpeg",
             alt: "Ke Braga paling berkesan",
             placeholder: "keBragaPalingberkesan",
-            caption: "Ini diaaa, Braga. tempat yang selalu ada memori tentang kamu disetiap sudutnya. Aku inget banget disini karena aku pengen banget ngebuat kamu seneng, akhirnya aku beliin pita dengan sisa-sisa uang yang aku punya.TBH, aku seneng sampai berkaca-kaca karena akhirnya aku bisa kasih sesuatu buat kamu.💖🥹"
+            caption: "Ini diaaa, Braga. tempat yang selalu ada memori tentang kamu disetiap sudutnya. Aku inget banget disini karena aku pengen banget ngebuat kamu seneng, akhirnya aku beliin pita dengan sisa-sisa uang yang aku punya. TBH, aku seneng sampai berkaca-kaca karena akhirnya aku bisa kasih sesuatu buat kamu.💖🥹"
           }
         ],
         quote: "Every moment with you is a treasure I hold close to my heart."
@@ -1137,11 +1144,35 @@
       }
     }
     
+    // ===== Background Music =====
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    const iconOn = document.getElementById('music-icon-on');
+    const iconOff = document.getElementById('music-icon-off');
+    let musicStarted = false;
+
+    function tryPlayMusic() {
+      if (musicStarted) return;
+      bgMusic.volume = 0.4;
+      bgMusic.play().then(() => {
+        musicStarted = true;
+      }).catch(() => {});
+    }
+
+    musicToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!musicStarted) tryPlayMusic();
+      bgMusic.muted = !bgMusic.muted;
+      iconOn.classList.toggle('hidden', bgMusic.muted);
+      iconOff.classList.toggle('hidden', !bgMusic.muted);
+    });
+
     function init() {
       createPages();
       
       document.getElementById('open-btn').addEventListener('click', (e) => {
         e.stopPropagation();
+        tryPlayMusic();
         openBook();
       });
       
